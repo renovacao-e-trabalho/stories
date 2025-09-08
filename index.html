@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Renovação & Trabalho - Apoie nossa chapa!</title>
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Renovação & Trabalho - Apoie nossa chapa!">
+  <meta property="og:description" content="Adicione nossa moldura em sua foto de perfil e apoie nossa campanha!">
+  <meta property="og:image" content="https://i.imgur.com/jBO8QJF.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://math-philip.github.io/minha-campanha">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Renovação & Trabalho - Apoie nossa chapa!">
+  <meta name="twitter:description" content="Adicione nossa moldura em sua foto de perfil e apoie nossa campanha!">
+  <meta name="twitter:image" content="https://i.imgur.com/jBO8QJF.png">
+
+  <script src="https://cdn.jsdelivr.net/npm/konva@8.4.3/konva.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,900;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Logo no topo -->
+  <img src="Logo-Renova.svg" alt="Logo Renova" class="top-logo">
+
+  <!-- Container do título -->
+  <div class="title-container">
+    <h1>Apoie nossa chapa!</h1>
+    <p>Adicione nossa moldura em sua foto de perfil e apoie nossa campanha!</p>
+  </div>
+
+  <!-- Container do editor -->
+  <div class="container">
+
+    <!-- Switch de moldura -->
+    <div class="frame-switch">
+      <input type="radio" id="votante" name="frameOption" value="votante" checked>
+      <label for="votante">Sou votante</label>
+
+      <input type="radio" id="apoiador" name="frameOption" value="apoiador">
+      <label for="apoiador">Sou apoiador</label>
+    </div>
+
+    <!-- Canvas -->
+    <div id="canvas-container"></div>
+
+    <!-- Controles -->
+    <div class="controls">
+      <button id="choose-file">Escolha sua foto</button>
+      <input type="file" id="file-input" accept="image/*">
+      <button id="download">Baixar foto</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

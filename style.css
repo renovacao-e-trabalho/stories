@@ -1,0 +1,200 @@
+/* Fonte Montserrat */
+body {
+  font-family: 'Montserrat', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0;
+  min-height: 100vh;
+  padding: 20px;
+
+  /* Fundo gradiente animado */
+  background: linear-gradient(-45deg, #0030b5, #1e6dec, #002384, #8bd96c);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Logo no topo */
+.top-logo {
+  display: block;
+  max-width: 300px;
+  width: 50%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+/* Container do título */
+.title-container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.title-container h1 {
+  font-weight: 900;
+  font-size: 1.8rem;
+  margin: 0 0 10px 0;
+  color: #0030b5;
+}
+
+.title-container p {
+  font-weight: 500;
+  font-style: italic;
+  font-size: 1rem;
+  margin: 0;
+  color: black;
+}
+
+/* Container do editor */
+.container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+}
+
+/* Switch de moldura estilizado */
+.frame-switch {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.frame-switch input[type="radio"] {
+  display: none;
+}
+
+.frame-switch label {
+  padding: 0 15px;             /* reduzir padding horizontal */
+  height: 40px;                /* altura igual aos botões principais */
+  border: 2px solid #1e6dec;
+  border-radius: 5px;          /* mesma borda dos botões */
+  color: #1e6dec;
+  font-weight: 500;            /* igual aos botões */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.frame-switch input[type="radio"]:checked + label {
+  background-color: #1e6dec;
+  color: white;
+}
+
+/* Canvas */
+#canvas-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  margin: 20px auto;
+  border: 2px dashed #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Controles */
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.controls button {
+  padding: 10px 20px;
+  background-color: #0eb287;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  height: 40px; /* uniformizar altura */
+}
+
+#file-input {
+  display: none;
+}
+
+#download {
+  display: none;
+  background-color: #1e6dec;
+  color: white;
+}
+
+/* Notificação de sucesso */
+.notification {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100%);
+  background-color: #8bd96c;
+  color: white;
+  padding: 15px 25px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: all 0.5s ease;
+  text-align: center;       /* centralizar texto */
+  white-space: nowrap;      /* evitar quebra de linha desnecessária */
+  max-width: 90%;           /* limitar largura no celular */
+}
+
+.notification.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* Responsivo para celulares */
+@media (max-width: 480px) {
+  .top-logo {
+    max-width: 200px;
+    width: 70%;
+  }
+
+  .title-container,
+  .container {
+    max-width: 90%;
+    padding: 15px;
+  }
+
+  .title-container h1 { font-size: 1.4rem; }
+  .title-container p { font-size: 0.9rem; }
+
+  .frame-switch label {
+    font-size: 0.9rem;  /* ajustar texto nos radios */
+    padding: 0 10px;
+    height: 36px;
+  }
+
+  .controls button {
+    height: 36px;
+    font-size: 0.9rem;
+    padding: 8px 15px;
+  }
+}
