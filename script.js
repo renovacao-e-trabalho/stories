@@ -277,32 +277,51 @@ canvasContainer.addEventListener('touchend', (e)=>{if(e.touches.length<2) lastDi
 
 // Download JPG 100% e mostrar notificação
 downloadButton.addEventListener('click', () => {
-  if(!photo) return;
+  if (!photo || !photo.getImage()) {
+    showNotification('Por favor, adicione uma foto antes de baixar!', 5000);
+    return;
+  }
+
   const downloadSize = 800;
   const mergedCanvas = document.createElement('canvas');
   mergedCanvas.width = downloadSize;
   mergedCanvas.height = downloadSize;
   const ctx = mergedCanvas.getContext('2d');
 
+  // Fundo branco
   ctx.fillStyle = '#ffffff';
-  ctx.fillRect(0,0,downloadSize,downloadSize);
+  ctx.fillRect(0, 0, downloadSize, downloadSize);
 
-  const scaleX = photo.width()*photo.scaleX()/stage.width();
-  const scaleY = photo.height()*photo.scaleY()/stage.height();
-  const posX = photo.x()/stage.width()*downloadSize;
-  const posY = photo.y()/stage.height()*downloadSize;
-  ctx.drawImage(photo.getImage(), posX, posY, scaleX*downloadSize, scaleY*downloadSize);
+  // Foto redimensionada
+  const scaleX = (photo.width() * photo.scaleX()) / stage.width();
+  const scaleY = (photo.height() * photo.scaleY()) / stage.height();
+  const posX = (photo.x() / stage.width()) * downloadSize;
+  const posY = (photo.y() / stage.height()) * downloadSize;
 
-  if(frameVotanteImg && frameVotanteImg.visible()) ctx.drawImage(frameVotanteImg.image(), 0, 0, downloadSize, downloadSize);
-  if(frameApoiadorImg && frameApoiadorImg.visible()) ctx.drawImage(frameApoiadorImg.image(), 0, 0, downloadSize, downloadSize);
+  ctx.drawImage(
+    photo.getImage(),
+    posX, posY,
+    scaleX * downloadSize,
+    scaleY * downloadSize
+  );
 
-  const dataURL = mergedCanvas.toDataURL('image/jpeg',1.0);
-  const a = document.createElement('a');
-  a.href = dataURL;
-  a.download = 'foto_com_moldura.jpg';
-  a.click();
+  // Molduras
+  if (frameVotanteImg && frameVotanteImg.visible())
+    ctx.drawImage(frameVotanteImg.image(), 0, 0, downloadSize, downloadSize);
 
-  // Notificação responsiva
+  if (frameApoiadorImg && frameApoiadorImg.visible())
+    ctx.drawImage(frameApoiadorImg.image(), 0, 0, downloadSize, downloadSize);
+
+  // Exportar JPG e baixar
+  mergedCanvas.toBlob((blob) => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'foto_com_moldura.jpg';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  }, 'image/jpeg', 1.0);
+
+  // Notificação
   showNotification('Foto baixada com sucesso! Compartilhe com os amigos!', 10000);
 });
 
@@ -316,21 +335,4 @@ window.addEventListener('resize', () => {
   if(frameApoiadorImg) {frameApoiadorImg.width(newSize); frameApoiadorImg.height(newSize);}
   if(overlayLayer) overlayLayer.getChildren().forEach(img=>{img.width(newSize); img.height(newSize);});
   if(photo) {
-    const scale = Math.max(newSize/photo.getImage().width,newSize/photo.getImage().height);
-    photo.setAttrs({
-      x:(newSize-photo.getImage().width*scale)/2,
-      y:(newSize-photo.getImage().height*scale)/2,
-      width:photo.getImage().width*scale,
-      height:photo.getImage().height*scale,
-      scaleX:1,
-      scaleY:1
-    });
-  }
-
-  if(sampleLayer) sampleLayer.getChildren().forEach(img=>{img.width(newSize); img.height(newSize);});
-  overlayLayer.moveToTop();
-  frameLayer.draw();
-  photoLayer.draw();
-});
-
-initCanvas();
+    co
