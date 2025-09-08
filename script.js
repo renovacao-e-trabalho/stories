@@ -77,7 +77,7 @@ const initCanvas = () => {
   sampleLayer = new Konva.Layer();
   stage.add(sampleLayer);
   const sample = new Image();
-  sample.src = 'sample.png';
+  sample.src = 'https://i.imgur.com/lSEkRp0.png';
   sample.onload = () => {
     const sampleImg = new Konva.Image({
       x: 0,
@@ -108,7 +108,7 @@ const initCanvas = () => {
 
   // Pré-carregar molduras
   const votanteImg = new Image();
-  votanteImg.src = 'Twibbon-Eu-Voto2.png';
+  votanteImg.src = 'https://i.imgur.com/77VHGJ0.png';
   votanteImg.onload = () => {
     frameVotanteImg = new Konva.Image({
       x: 0,
@@ -124,7 +124,7 @@ const initCanvas = () => {
   };
 
   const apoiadorImg = new Image();
-  apoiadorImg.src = 'Twibbon-Eu-Apoio2.png';
+  apoiadorImg.src = 'https://i.imgur.com/N1DB506.png';
   apoiadorImg.onload = () => {
     frameApoiadorImg = new Konva.Image({
       x: 0,
@@ -143,7 +143,7 @@ const initCanvas = () => {
   overlayLayer = new Konva.Layer();
   stage.add(overlayLayer);
   const overlayStatic = new Image();
-  overlayStatic.src = 'overlay.png';
+  overlayStatic.src = 'https://i.imgur.com/MiNPgs4.png';
   overlayStatic.onload = () => {
     const overlayImg = new Konva.Image({
       x: 0,
