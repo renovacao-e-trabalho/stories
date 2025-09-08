@@ -77,7 +77,7 @@ const initCanvas = () => {
   sampleLayer = new Konva.Layer();
   stage.add(sampleLayer);
   const sample = new Image();
-  sample.src = 'https://i.imgur.com/lSEkRp0.png';
+  sample.src = 'sample.png';
   sample.onload = () => {
     const sampleImg = new Konva.Image({
       x: 0,
@@ -108,7 +108,7 @@ const initCanvas = () => {
 
   // Pré-carregar molduras
   const votanteImg = new Image();
-  votanteImg.src = 'https://i.imgur.com/77VHGJ0.png';
+  votanteImg.src = 'Twibbon-Eu-Voto2.png';
   votanteImg.onload = () => {
     frameVotanteImg = new Konva.Image({
       x: 0,
@@ -124,7 +124,7 @@ const initCanvas = () => {
   };
 
   const apoiadorImg = new Image();
-  apoiadorImg.src = 'https://i.imgur.com/N1DB506.png';
+  apoiadorImg.src = 'Twibbon-Eu-Apoio2.png';
   apoiadorImg.onload = () => {
     frameApoiadorImg = new Konva.Image({
       x: 0,
@@ -143,7 +143,7 @@ const initCanvas = () => {
   overlayLayer = new Konva.Layer();
   stage.add(overlayLayer);
   const overlayStatic = new Image();
-  overlayStatic.src = 'https://i.imgur.com/MiNPgs4.png';
+  overlayStatic.src = 'overlay.png';
   overlayStatic.onload = () => {
     const overlayImg = new Konva.Image({
       x: 0,
@@ -277,8 +277,7 @@ canvasContainer.addEventListener('touchend', (e)=>{if(e.touches.length<2) lastDi
 
 // Download JPG 100% e mostrar notificação
 downloadButton.addEventListener('click', () => {
-  if (!photo) return;
-
+  if(!photo) return;
   const downloadSize = 800;
   const mergedCanvas = document.createElement('canvas');
   mergedCanvas.width = downloadSize;
@@ -286,37 +285,24 @@ downloadButton.addEventListener('click', () => {
   const ctx = mergedCanvas.getContext('2d');
 
   ctx.fillStyle = '#ffffff';
-  ctx.fillRect(0, 0, downloadSize, downloadSize);
+  ctx.fillRect(0,0,downloadSize,downloadSize);
 
-  const scale = downloadSize / stage.width();
+  const scaleX = photo.width()*photo.scaleX()/stage.width();
+  const scaleY = photo.height()*photo.scaleY()/stage.height();
+  const posX = photo.x()/stage.width()*downloadSize;
+  const posY = photo.y()/stage.height()*downloadSize;
+  ctx.drawImage(photo.getImage(), posX, posY, scaleX*downloadSize, scaleY*downloadSize);
 
-  ctx.drawImage(
-    photo.image(),
-    photo.x() * scale,
-    photo.y() * scale,
-    photo.width() * photo.scaleX() * scale,
-    photo.height() * photo.scaleY() * scale
-  );
+  if(frameVotanteImg && frameVotanteImg.visible()) ctx.drawImage(frameVotanteImg.image(), 0, 0, downloadSize, downloadSize);
+  if(frameApoiadorImg && frameApoiadorImg.visible()) ctx.drawImage(frameApoiadorImg.image(), 0, 0, downloadSize, downloadSize);
 
-  if (frameVotanteImg && frameVotanteImg.visible()) {
-    ctx.drawImage(frameVotanteImg.image(), 0, 0, downloadSize, downloadSize);
-  }
-  if (frameApoiadorImg && frameApoiadorImg.visible()) {
-    ctx.drawImage(frameApoiadorImg.image(), 0, 0, downloadSize, downloadSize);
-  }
-
-  if (overlayLayer) {
-    overlayLayer.getChildren().forEach(img => {
-      ctx.drawImage(img.image(), 0, 0, downloadSize, downloadSize);
-    });
-  }
-
-  const dataURL = mergedCanvas.toDataURL('image/jpeg', 1.0);
+  const dataURL = mergedCanvas.toDataURL('image/jpeg',1.0);
   const a = document.createElement('a');
   a.href = dataURL;
   a.download = 'foto_com_moldura.jpg';
   a.click();
 
+  // Notificação responsiva
   showNotification('Foto baixada com sucesso! Compartilhe com os amigos!', 10000);
 });
 
