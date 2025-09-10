@@ -299,7 +299,7 @@ downloadButton.addEventListener('click', () => {
   const dataURL = mergedCanvas.toDataURL('image/jpeg',1.0);
   const a = document.createElement('a');
   a.href = dataURL;
-  a.download = 'foto_com_moldura.jpg';
+  a.download = 'RT_foto_com_moldura.jpg';
   a.click();
 
   // Notificação responsiva
