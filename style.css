@@ -28,6 +28,9 @@ body {
   width: 50%;
   height: auto;
   margin-bottom: 20px;
+
+  /* sombra leve */
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.3));
 }
 
 /* Container do título */
