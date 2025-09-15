@@ -65,12 +65,13 @@ const showNotification = (msg, duration = 5000) => {
 
 // Inicialização do canvas
 const initCanvas = () => {
-  const containerSize = canvasContainer.offsetWidth;
+  const containerWidth = canvasContainer.offsetWidth;
+  const containerHeight = containerWidth * 16 / 9; // proporção 9:16
 
   stage = new Konva.Stage({
     container: 'canvas-container',
-    width: containerSize,
-    height: containerSize
+    width: containerWidth,
+    height: containerHeight
   });
 
   // Sample layer (fundo)
@@ -206,14 +207,15 @@ fileInput.addEventListener('change', (e) => {
     const img = new Image();
     img.src = reader.result;
     img.onload = () => {
-      const containerSize = stage.width();
-      const scaleX = containerSize / img.width;
-      const scaleY = containerSize / img.height;
+      const containerW = stage.width();
+      const containerH = stage.height();
+      const scaleX = containerW / img.width;
+      const scaleY = containerH / img.height;
       const finalScale = Math.max(scaleX, scaleY);
       const finalWidth = img.width * finalScale;
       const finalHeight = img.height * finalScale;
-      const finalX = (containerSize - finalWidth)/2;
-      const finalY = (containerSize - finalHeight)/2;
+      const finalX = (containerW - finalWidth)/2;
+      const finalY = (containerH - finalHeight)/2;
 
       sampleLayer.destroyChildren();
       sampleLayer.draw();
@@ -275,26 +277,27 @@ canvasContainer.addEventListener('touchmove', (e) => {
 });
 canvasContainer.addEventListener('touchend', (e)=>{if(e.touches.length<2) lastDistance=0;});
 
-// Download JPG 100% e mostrar notificação
+// Download JPG 1080x1920 e mostrar notificação
 downloadButton.addEventListener('click', () => {
   if(!photo) return;
-  const downloadSize = 800;
+  const downloadWidth = 1080;
+  const downloadHeight = 1920;
   const mergedCanvas = document.createElement('canvas');
-  mergedCanvas.width = downloadSize;
-  mergedCanvas.height = downloadSize;
+  mergedCanvas.width = downloadWidth;
+  mergedCanvas.height = downloadHeight;
   const ctx = mergedCanvas.getContext('2d');
 
   ctx.fillStyle = '#ffffff';
-  ctx.fillRect(0,0,downloadSize,downloadSize);
+  ctx.fillRect(0,0,downloadWidth,downloadHeight);
 
   const scaleX = photo.width()*photo.scaleX()/stage.width();
   const scaleY = photo.height()*photo.scaleY()/stage.height();
-  const posX = photo.x()/stage.width()*downloadSize;
-  const posY = photo.y()/stage.height()*downloadSize;
-  ctx.drawImage(photo.getImage(), posX, posY, scaleX*downloadSize, scaleY*downloadSize);
+  const posX = photo.x()/stage.width()*downloadWidth;
+  const posY = photo.y()/stage.height()*downloadHeight;
+  ctx.drawImage(photo.getImage(), posX, posY, scaleX*downloadWidth, scaleY*downloadHeight);
 
-  if(frameVotanteImg && frameVotanteImg.visible()) ctx.drawImage(frameVotanteImg.image(), 0, 0, downloadSize, downloadSize);
-  if(frameApoiadorImg && frameApoiadorImg.visible()) ctx.drawImage(frameApoiadorImg.image(), 0, 0, downloadSize, downloadSize);
+  if(frameVotanteImg && frameVotanteImg.visible()) ctx.drawImage(frameVotanteImg.image(), 0, 0, downloadWidth, downloadHeight);
+  if(frameApoiadorImg && frameApoiadorImg.visible()) ctx.drawImage(frameApoiadorImg.image(), 0, 0, downloadWidth, downloadHeight);
 
   const dataURL = mergedCanvas.toDataURL('image/jpeg',1.0);
   const a = document.createElement('a');
@@ -308,18 +311,19 @@ downloadButton.addEventListener('click', () => {
 
 // Redimensionamento responsivo
 window.addEventListener('resize', () => {
-  const newSize = canvasContainer.offsetWidth;
-  stage.width(newSize);
-  stage.height(newSize);
+  const newW = canvasContainer.offsetWidth;
+  const newH = newW * 16 / 9;
+  stage.width(newW);
+  stage.height(newH);
 
-  if(frameVotanteImg) {frameVotanteImg.width(newSize); frameVotanteImg.height(newSize);}
-  if(frameApoiadorImg) {frameApoiadorImg.width(newSize); frameApoiadorImg.height(newSize);}
-  if(overlayLayer) overlayLayer.getChildren().forEach(img=>{img.width(newSize); img.height(newSize);});
+  if(frameVotanteImg) {frameVotanteImg.width(newW); frameVotanteImg.height(newH);}
+  if(frameApoiadorImg) {frameApoiadorImg.width(newW); frameApoiadorImg.height(newH);}
+  if(overlayLayer) overlayLayer.getChildren().forEach(img=>{img.width(newW); img.height(newH);});
   if(photo) {
-    const scale = Math.max(newSize/photo.getImage().width,newSize/photo.getImage().height);
+    const scale = Math.max(newW/photo.getImage().width,newH/photo.getImage().height);
     photo.setAttrs({
-      x:(newSize-photo.getImage().width*scale)/2,
-      y:(newSize-photo.getImage().height*scale)/2,
+      x:(newW-photo.getImage().width*scale)/2,
+      y:(newH-photo.getImage().height*scale)/2,
       width:photo.getImage().width*scale,
       height:photo.getImage().height*scale,
       scaleX:1,
@@ -327,7 +331,7 @@ window.addEventListener('resize', () => {
     });
   }
 
-  if(sampleLayer) sampleLayer.getChildren().forEach(img=>{img.width(newSize); img.height(newSize);});
+  if(sampleLayer) sampleLayer.getChildren().forEach(img=>{img.width(newW); img.height(newH);});
   overlayLayer.moveToTop();
   frameLayer.draw();
   photoLayer.draw();
