@@ -10,7 +10,7 @@ body {
   padding: 20px;
 
   /* Fundo gradiente animado */
-  background: linear-gradient(-45deg, #1e6dec, #0eb287, #1e6dec, #0eb287);
+  background: linear-gradient(-45deg, #1e6dec, #0030B5, #1e6dec, #0030B5);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 }
@@ -49,7 +49,7 @@ body {
   font-weight: 900;
   font-size: 1.8rem;
   margin: 0 0 10px 0;
-  color: #0c9470;
+  color: #0030B5;
 }
 
 .title-container p {
@@ -88,7 +88,7 @@ body {
   height: 40px;                /* altura igual aos botões principais */
   border: 2px solid #1e6dec;
   border-radius: 5px;          /* mesma borda dos botões */
-  color: #1e6dec;
+  color: #0030B5;
   font-weight: 500;            /* igual aos botões */
   cursor: pointer;
   transition: all 0.3s ease;
@@ -100,7 +100,7 @@ body {
 }
 
 .frame-switch input[type="radio"]:checked + label {
-  background-color: #1e6dec;
+  background-color: #0030B5;
   color: white;
 }
 
