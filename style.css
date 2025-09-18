@@ -10,7 +10,7 @@ body {
   padding: 20px;
 
   /* Fundo gradiente animado */
-  background: linear-gradient(-45deg, #1e6dec, #0030B5, #1e6dec, #0030B5);
+  background: linear-gradient(-45deg, #8BD96C, #0030B5, #8BD96C, #0030B5);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 }
@@ -86,7 +86,7 @@ body {
 .frame-switch label {
   padding: 0 15px;             /* reduzir padding horizontal */
   height: 40px;                /* altura igual aos botões principais */
-  border: 2px solid #1e6dec;
+  border: 2px solid #0030B5;
   border-radius: 5px;          /* mesma borda dos botões */
   color: #0030B5;
   font-weight: 500;            /* igual aos botões */
